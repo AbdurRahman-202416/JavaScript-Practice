@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DOM Manipulation Practice</title>
+    <!-- Tailwind CSS CDN -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        background-image: url("https://coolbackgrounds.io/images/backgrounds/index/ranger-4df6c1b6.png");
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-color: aqua;
+      }
+    </style>
+  </head>
+  <body class="bg-gray-100 flex items-center justify-center min-h-screen">
+    <div id="parent" class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+      <h1 class="text-2xl font-bold mb-4 text-center text-blue-600">
+        Add Task
+      </h1>
+
+      <!-- Input Field and Button -->
+      <div class="flex mb-4">
+        <input
+          type="text"
+          id="taskInput"
+          class="flex-1 p-2 border rounded-l-md focus:outline-none focus:border-blue-500"
+          placeholder="Enter a task..."
+        />
+        <button
+          id="addTaskBtn"
+          class="bg-blue-500 text-white p-2 rounded-r-md hover:bg-blue-600 focus:outline-none"
+        >
+          Add Task
+        </button>
+      </div>
+
+      <!-- Task List -->
+      <ul id="taskList" class="space-y-2">
+        <!-- Task items will be added here by JavaScript -->
+      </ul>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+      // Declare itemArr outside the function
+      let itemArr = JSON.parse(localStorage.getItem("tasks")) || [];
+
+      // Function to load tasks from localStorage
+      function loadTasks() {
+        const taskList = document.getElementById("taskList");
+        itemArr.forEach((task) => {
+          const listItem = document.createElement("li");
+          listItem.className =
+            "p-3 bg-gray-200 rounded-md flex justify-between items-center";
+
+          const taskText = document.createElement("span");
+          taskText.textContent = task.text;
+          listItem.appendChild(taskText);
+
+          const deleteBtn = document.createElement("button");
+          deleteBtn.className = "text-red-400 hover:text-red-600";
+          deleteBtn.textContent = "Delete";
+          deleteBtn.addEventListener("click", function () {
+            listItem.remove();
+            itemArr = itemArr.filter((t) => t.text !== task.text);
+            localStorage.setItem("tasks", JSON.stringify(itemArr));
+          });
+          listItem.appendChild(deleteBtn);
+          taskList.appendChild(listItem);
+        });
+      }
+
+      // Function to add a new task
+      function addTask() {
+        const taskInput = document.getElementById("taskInput");
+        const taskList = document.getElementById("taskList");
+
+        if (taskInput.value.trim() !== "") {
+          const newTask = { text: taskInput.value };
+          itemArr.push(newTask);
+
+          const listItem = document.createElement("li");
+          listItem.className =
+            "p-3 bg-gray-200 rounded-md flex justify-between items-center";
+
+          const taskText = document.createElement("span");
+          taskText.textContent = newTask.text;
+          listItem.appendChild(taskText);
+
+          const deleteBtn = document.createElement("button");
+          deleteBtn.className = "text-red-500 hover:text-red-700";
+          deleteBtn.textContent = "Delete";
+          deleteBtn.addEventListener("click", function () {
+            listItem.remove();
+            itemArr = itemArr.filter((t) => t.text !== newTask.text);
+            localStorage.setItem("tasks", JSON.stringify(itemArr));
+          });
+          listItem.appendChild(deleteBtn);
+
+          taskList.appendChild(listItem);
+          localStorage.setItem("tasks", JSON.stringify(itemArr));
+          taskInput.value = "";
+        } else {
+          // Handle empty input...
+          if (taskInput.value == "") {
+            alert("Enter text and press Enter or click the Add button.");
+          }
+        }
+      }
+
+      // Load tasks when the page loads
+      document.addEventListener("DOMContentLoaded", loadTasks);
+
+      // Add event listener for "Add Task" button click
+      document.getElementById("addTaskBtn").addEventListener("click", addTask);
+
+      // Add event listener for "Enter" key press in input field
+      document
+        .getElementById("taskInput")
+        .addEventListener("keydown", function (event) {
+          if (event.key === "Enter") {
+            addTask();
+          }
+        });
+    </script>
+  </body>
+</html>

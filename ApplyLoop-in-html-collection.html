@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <title>Document</title>
+  </head>
+  <body>
+    <ul id="main" class="container mx-auto px-10">
+      <li class="listItem item">item text</li>
+      <li class="listItem item">item text</li>
+      <li class="listItem item">item text</li>
+      <li class="listItem item">item text</li>
+      <li class="listItem item">item text</li>
+      <li class="listItem item">item text</li>
+      <li class="listItem item">item text</li>
+      <li class="listItem item">item text</li>
+    </ul>
+
+    <script>
+      
+      let container = document.querySelector("#main");
+      console.log(container.children);
+
+      let h1 = newElement("h1", "item Text", "item");
+      console.log(h1);
+      container.appendChild(h1);
+      for (let i = 0; i < 5; i++) {
+        let li = newElement("li", "this is pragraph", "item");
+        append( container, [li])
+      }
+      let items = document.querySelectorAll(".item");
+      console.log(items);
+      let itemArray = [...items];
+      console.log(itemArray);
+      itemArray.map((item, index) => {
+        let itemTxt = item.innerHTML;
+        item.innerHTML = `(${index + 1}) ${itemTxt} `;
+      });
+// for create a new element 
+      function newElement(tagname, innerHTML, className) {
+        let element = document.createElement(tagname);
+        element.innerHTML = innerHTML;
+        element.className = className || "";
+
+        return element;
+      }
+      // for  append child to parent
+      function append(parent, child) {
+        child.forEach((child) => parent.appendChild(child));
+      }
+
+    //clone  element 
+       
+     // for All of parent div 
+      let firstItem= container.cloneNode(true);
+      // for Copy only single Element 
+      // let firstItem= container.firstElementChild.cloneNode();
+      console.log(firstItem.childNodes)
+      // firstItem.innerHTML="i'am clone Tag ";
+      let body= document.querySelector('body')
+       let all= [...firstItem.childNodes];
+       all.map((item,index)=>{
+        item.innerHTML=` (${index+1}) i am new  item from list Ul  copy  to using CloneNode `
+
+        body.appendChild(item)
+       })
+  
+    </script>
+  </body>
+</html>

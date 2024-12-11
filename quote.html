@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quote Cards</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      /* Custom animation for gradient background */
+      .bg-animate {
+        background: linear-gradient(270deg, #f6ac9a, #301b0c, #b38ddb, #131b28);
+        background-size: 200% 200%;
+        animation: gradientAnimation 15s ease infinite;
+      }
+
+      @keyframes gradientAnimation {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+      }
+
+      /* Card hover effect */
+      .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        transition: transform 0.3s, box-shadow 0.3s;
+      }
+    </style>
+  </head>
+  <body class="bg-animate min-h-screen flex flex-col justify-between">
+
+    <!-- Navbar -->
+    <header class="bg-blue text-white shadow-md py-4">
+      <div class="container mx-auto px-4 flex justify-between items-center">
+        <h1 class="text-2xl font-bold text-gray-800">Top Quotes</h1>
+        <nav>
+          <ul class="flex space-x-6">
+            <li><a href="#" class="text-gray-600 hover:text-gray-900">Home</a></li>
+            <li><a href="#" class="text-gray-600 hover:text-gray-900">About</a></li>
+            <li><a href="#" class="text-gray-600 hover:text-gray-900">Contact</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+   
+      <!-- Container for the cards -->
+      <div id="parant" class="flex flex-wrap justify-center space-y-4"></div>
+  
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-4">
+      <div class="container mx-auto text-center">
+        <p>&copy; 2024 Quotes. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script>
+      async function getdata() {
+        try {
+          const response = await fetch("https://dummyjson.com/quotes");
+          
+          const data = response.json();
+          console.log(data)
+          displayData(data.quotes);
+          
+        } catch (err) {
+          console.log("Error fetching data:", err);
+        }
+      }
+
+      function displayData(data) {
+        const parant = document.getElementById("parant");
+        parant.innerHTML = '';  // Clear any existing content
+        
+        data.forEach((item) => {
+          parant.innerHTML += `
+            <div class="bg-white card rounded-lg shadow-lg p-6 max-w-xs m-4 transition-all duration-300 transform hover:scale-105">
+              <p class="text-gray-800 text-xl font-semibold mb-4">
+                <span>${item.id} )</span> ${item.quote}
+              </p>
+              <p class="text-gray-600 text-lg font-medium text-right">
+                - ${item.author}
+              </p>
+            </div>
+          `;
+        });
+      }
+
+      // Load data on page load
+      window.onload = getdata;
+    </script>
+  </body>
+</html>

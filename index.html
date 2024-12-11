@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Responsive Interactive Page</title>
+    <style>
+      /* CSS Styles */
+
+      body {
+        font-weight: bold;
+        background: linear-gradient(
+          to bottom,
+          #021526,
+          #3b4e3b,
+          rgb(20, 126, 213),
+          rgb(66, 96, 16)
+        );
+        color: #ffffff;
+        font-family: Arial, sans-serif;
+        overflow: hidden;
+        /* animation: backgroundAnimation 15s infinite alternate ease-in-out; */
+      }
+
+      /* Container and Box */
+      .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        padding: 10px;
+      }
+
+      .box {
+        height: 300px;
+        width: 300px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .box h1 {
+        margin-bottom: 20px;
+        text-align: center;
+      }
+
+      /* Button Styles */
+      #yes,
+      #no {
+        background-color: #4caf50;
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        border-radius: 8px;
+        transition: all 0.5s;
+      }
+
+      #yes:hover {
+        background-color: #3b1e54;
+      }
+
+      #no {
+        background-color: #f44336;
+        position: absolute;
+      }
+
+      #no:hover {
+        background-color: #9c7171;
+      }
+
+      /* Mobile Responsiveness */
+      @media only screen and (max-width: 768px) {
+        .box {
+          height: 250px;
+          width: 250px;
+        }
+      }
+
+      @media only screen and (max-width: 480px) {
+        .box {
+          height: 200px;
+          width: 90%;
+        }
+        #yes,
+        #no {
+          padding: 10px 20px;
+          font-size: 14px;
+        }
+      }
+
+      /* Background Animation */
+      @keyframes backgroundAnimation {
+        0% {
+          background-position: 0% 50%;
+        }
+        100% {
+          background-position: 100% 50%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="box">
+        <h1>Do You Like me ??</h1>
+        <h1 id="Print" style="color: rgb(48, 101, 186)">.</h1>
+        <button id="yes">Yes</button>
+      </div>
+      <button id="no">No</button>
+   
+    </div>   <figcaption>Development by Shanto</figcaption>
+    <script>
+      const yes = document.querySelector("#yes");
+      const no = document.querySelector("#no");
+
+      // Function to move the "No" button
+      function moveButton() {
+        const viewportWidth = window.innerWidth;
+        
+        const viewportHeight = window.innerHeight;
+
+        const randomX = Math.random() * (viewportWidth - 120);
+        const randomY = Math.random() * (viewportHeight - 120);
+
+        no.style.left = randomX + "px";
+        no.style.top = randomY + "px";
+      }
+   console.log(window.innerWidth);
+     
+
+      // Event listeners for desktop and mobile
+      no.addEventListener("mouseenter", moveButton); // Desktop
+      no.addEventListener("touchstart", moveButton); // Mobile
+     
+
+
+      // Handling button clicks
+      // no.addEventListener("click", function () {
+      //   let mssg = prompt("Why you don't like me?");
+      //   let output = document.getElementById("Print");
+      //   output.innerText = "You Don't like Me Because you said:  " + mssg;
+      //   output.style.color = "tomato";
+      //   setTimeout(() => {
+      //     output.innerText = "";
+      //   }, 5000);
+      // });
+
+      yes.addEventListener("click", function () {
+        let output = document.getElementById("Print");
+        output.innerHTML = "I like you too! &#10004 ";
+        output.style.color = "tomato";
+        setTimeout(() => {
+          output.innerText = "";
+        }, 5000);
+      });
+    </script>
+  </body>
+</html>

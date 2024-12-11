@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bootstrap Site</title>
+    <style>
+      .item{
+        width: 80%;
+        margin: 5px 0px 0px 10px;
+      }
+    </style>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
+      integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+      integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"
+      integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <h1 style="text-align: center; background-color: tomato;color: aliceblue;" id="title" class="title  p-4  ">Task add List</h1>
+    <div class="container d-flex ">
+      <input type="text" placeholder="add  task..." class="form-control mb-2 h-1" id="task" />
+      <button onclick="add()" class=" btn btn-success tetx-white m-2 h-1 " type="submit">Add Task</button>
+    </div>
+      <ul
+        style="
+          display: flex;
+          list-style-type: lower-roman;
+          height:auto;
+          flex-direction: column;
+          align-items: center;
+          justify-content: left;
+        "
+        id="main"
+        class="container bg-black"
+      >
+        <li class="item mt-2">Item Title</li>
+        <li class="item text-success mb-4">Item Title</li>
+        <li class="item">Item Title</li>
+        <li class="item">Item Title</li>
+        <li class="item">Item Title</li>
+      </ul>
+   
+
+    <script>
+      let obj = {
+        background: "black",
+        fontSize: "40px",
+        color: "white",
+        borderRadius: "20px",
+      };
+      let list = document.getElementById("main");
+
+      Object.assign(list.style, obj);
+
+      function add(){
+        let task= document.getElementById('task');
+        console.log(task)
+        let newtask=list.lastElementChild.cloneNode();
+        newtask.textContent=task.value;
+        console.log(newtask.textContent);
+        list.appendChild(newtask);
+        task.value=''
+      }
+    </script>
+  </body>
+</html>

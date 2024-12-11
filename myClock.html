@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Digital Clock</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+    />
+    <style>
+      @font-face {
+        font-family: myFirstFont;
+        src: url(./digital-7.ttf);
+      }
+
+      body {
+        background-image: url(https://img.freepik.com/premium-photo/vintage-ornate-clock-textured-wall_662583-3212.jpg?semt=ais_hybrid);
+        background-repeat: no-repeat;
+        background-blend-mode: luminosity;
+        background-size: cover;
+        background-position: center;
+        color: #ffffff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+      }
+      .img {
+        filter: drop-shadow(2);
+        z-index: -1;
+        position: absolute;
+        top: 15%;
+        left: 20%;
+        transform: translate(-75%, -20%);
+      }
+      /* .img2{
+        border-radius: 20%;
+        position: absolute;
+        top: 62%;
+        left: 20%;
+        transform: translate(-78%, -21%);
+
+      } */
+
+      .container {
+        width: 90%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+      }
+
+      .container2 {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+        background-image: url(https://t3.ftcdn.net/jpg/08/24/42/50/360_F_824425016_jZoPEyAnXeviaHURIHQbljArS1akFX7Q.jpg);
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        padding: 20px;
+        border-radius: 10px;
+        width: 90%;
+        max-width: 580px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+      }
+
+      .container2 label {
+        font-family: fantasy;
+        font-size: 1.1em;
+        color: rgb(255, 255, 255);
+      }
+
+      .container2 input[type="text"] {
+        float: right;
+        margin-top: 10px;
+        padding: 10px;
+        width: 80%;
+        border-radius: 5px;
+        border: none;
+        font-size: 1em;
+      }
+      .tem {
+        font-family: myFirstFont;
+      }
+
+      #weather {
+        font-size: 1.1em;
+        margin-top: 15px;
+      }
+
+      .clock {
+        font-family: myFirstFont;
+        text-align: center;
+        font-size: 8vw;
+        font-weight: bold;
+        padding: 20px;
+        background-color: rgba(0, 0, 0, 0.7);
+        border-radius: 10px;
+        box-shadow: 0 4px 20px #86b7fe;
+      }
+      input {
+        box-shadow: 0 4px 20px rgba(87, 87, 87, 0.5);
+        border: none;
+      }
+      .btn {
+        margin: 10px;
+      }
+
+      h1 {
+        font-size: 9vw;
+        margin: 0;
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          width: 95%;
+        }
+        .clock {
+          font-size: 9vw;
+        }
+        .img,
+        .img2 {
+          display: none;
+        }
+        .container {
+          width: 90%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 10px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .container {
+          width: 95%;
+        }
+        .clock {
+          margin: 0px;
+          width: 90%;
+          font-size: 25vw;
+        }
+        .container2 {
+          height: 300px;
+          max-width: 90%;
+        }
+        .img,
+        .img2 {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <img
+      class="img"
+      style="margin: 0px 30px 0px 10px"
+      src="https://i2.pngimg.me/thumb/f/720/freesvgorg18965.jpg"
+      height="300px"
+      alt=""
+    />
+    <!-- <img class="img2" style="margin: 0px 30px 0px  10px ;" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTcM-57gnYQOsqb-EXEiqBeFYVtT33lmknHV11zBL2ZvU6EbeI-0f6i31dm-rgsXNVU8Do&usqp=CAU" height="100px" alt=""> -->
+    <div class="container">
+      <div class="container2">
+        <label>Enter Your Capital City Name</label>
+        <input
+          id="search"
+          type="text"
+          placeholder="Search Capital City Weather..."
+        />
+        <button class="btn btn-primary" type="button" onclick="search()">
+          Search
+        </button>
+        <div id="weather">Loading weather...</div>
+      </div>
+      <div class="clock">
+        <h1 id="time">.</h1>
+      </div>
+    </div>
+    <script>
+      function myfn() {
+        let h = new Date().getHours();
+        let m = new Date().getMinutes();
+        let s = new Date().getSeconds();
+        let ampm = "";
+        if (h >= 12) {
+          ampm = "PM";
+        } else {
+          ampm = "AM";
+        }
+        let fullHour = h % 12 || 12;
+        let display = document.getElementById("time");
+        display.innerHTML = "";
+
+        display.innerText = `${fullHour}:${m < 10 ? "0" + m : m}:${
+          s < 10 ? "0" + s : s
+        } ${ampm}`;
+      }
+
+      setInterval(() => {
+        myfn();
+      }, 1000);
+
+      //Weather
+
+      const apiKey = "1e3e8f230b6064d27976e41163a82b77";
+      let city = "Dhaka";
+      let searchValue = document.getElementById("search");
+      function search() {
+        if (city == searchValue.value) {
+          city = "Dhaka";
+          console.log(city);
+          getWeather();
+        } else {
+          city = searchValue.value;
+          console.log(city);
+          getWeather();
+        }
+      }
+      function getWeather() {
+        fetch(
+          `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`
+        )
+          .then((response) => response.json())
+          .then((data) => {
+            // Display data in the console or on your webpage
+            console.log(data);
+
+            const temp = data.main.temp;
+            const weather = data.weather[0].description;
+            const cityName = data.name;
+
+            document.getElementById("weather").innerHTML = `
+      <h2 class='City' >Weather in ${cityName}</h2>
+      <p class='tem'>Temperature: ${temp}°C</p>
+      <p class='condi'>Condition: ${weather}</p>
+    `;
+          })
+          .catch((error) =>
+            console.error("Error fetching weather data:", error)
+          );
+      }
+
+
+      getWeather()
+      // setInterval(() => {
+      //   getWeather();
+      // }, 2000);
+
+     
+    </script>
+  </body>
+</html>
